@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.secondproject.BottomNavigationActivity;
+import com.example.secondproject.Activitys.BottomNavigationActivity;
 import com.example.secondproject.R;
 import com.example.secondproject.SQLite.LocalDatabase;
 
