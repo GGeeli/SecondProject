@@ -6,6 +6,7 @@
     android:layout_height="150dp"
     android:layout_marginTop="5dp"
     android:padding="8dp"
+    android:id="@+id/linearLayout"
     android:orientation="horizontal"
     tools:context=".Activitys.BottomNavigationActivity">
 
@@ -38,7 +39,6 @@
             android:id="@+id/movie_description"
             android:text="Description"
             android:textSize="16sp"/>
-
     </LinearLayout>
 
 </LinearLayout>
