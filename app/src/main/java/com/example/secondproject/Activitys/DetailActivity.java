@@ -5,9 +5,10 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 
 import com.bumptech.glide.Glide;
 import com.example.secondproject.R;
@@ -24,9 +25,9 @@ public class DetailActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         initCollapsingToolbar();
 

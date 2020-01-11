@@ -51,7 +51,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_navigation);
 
-
+/*
         initViews();
         swipeContainer =findViewById(R.id.main_content);
        //swipeContainer.setColorSchemeColors(android.R.color.holo_orange_dark);
@@ -62,7 +62,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 Toast.makeText(BottomNavigationActivity.this, "Movies Refreshed!", Toast.LENGTH_SHORT).show();
             }
         });
-
+*/
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
         navController = Navigation.findNavController(this,R.id.nav_host_fragment);
@@ -70,7 +70,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
 
     }
 
-    public Activity getActivity(){
+   /* public Activity getActivity(){
         Context context = this;
         while (context instanceof ContextWrapper)
         {
@@ -153,5 +153,5 @@ public class BottomNavigationActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 }
