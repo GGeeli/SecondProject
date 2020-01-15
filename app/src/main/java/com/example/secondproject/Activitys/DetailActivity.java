@@ -2,22 +2,44 @@ package com.example.secondproject.Activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
+import com.example.secondproject.Adapter.TrailerAdapter;
+import com.example.secondproject.Api.Client;
+import com.example.secondproject.Api.Service;
+import com.example.secondproject.BuildConfig;
+import com.example.secondproject.Model.Trailer;
+import com.example.secondproject.Model.TrailerResponse;
 import com.example.secondproject.R;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static java.security.AccessController.getContext;
+
 public class DetailActivity extends AppCompatActivity {
     TextView nameOfMovie, plotSynopsis, userRating, releaseDate;
     ImageView imageView;
+    private RecyclerView recyclerView;
+    private TrailerAdapter adapter;
+    private List<Trailer> trailerList;
+    int movie_id;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +67,7 @@ public class DetailActivity extends AppCompatActivity {
             String synopsis = getIntent().getExtras().getString("overview");
             String rating = getIntent().getExtras().getString("vote_average");
             String dateOfRelease = getIntent().getExtras().getString("release_date");
+            movie_id = getIntent().getExtras().getInt("id");
 
             Glide.with(this)
                     .load(thumbnail)
@@ -58,6 +81,7 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No API Data", Toast.LENGTH_SHORT).show();
         }
+        initViews();
     }
 
     private void initCollapsingToolbar(){
@@ -84,6 +108,47 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void initViews(){
+        trailerList = new ArrayList<>();
+        adapter = new TrailerAdapter(this, trailerList);
+        recyclerView = findViewById(R.id.recycler_view1);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        //loadJSON();
+    }
+
+    private void loadJSON(){
+        try {
+            if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()){
+                Toast.makeText(getApplicationContext(), "Get API KEY from themoviedb.org", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Client Client = new Client();
+            Service apiService = Client.getClient().create(Service.class);
+            Call<TrailerResponse> call = apiService.getMovieTrailer(movie_id, BuildConfig.THE_MOVIE_DB_API_TOKEN);
+            call.enqueue(new Callback<TrailerResponse>() {
+                @Override
+                public void onResponse(Call<TrailerResponse> call, Response<TrailerResponse> response) {
+                    List<Trailer> trailer = response.body().getResults();
+                    recyclerView.setAdapter(new TrailerAdapter(getApplicationContext(),trailer));
+                    recyclerView.smoothScrollToPosition(0);
+                }
+
+                @Override
+                public void onFailure(Call<TrailerResponse> call, Throwable t) {
+                    Log.d("Error",t.getMessage());
+                    Toast.makeText(DetailActivity.this, "Error fetching trailer data", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }catch(Exception e){
+            Log.d("Error",e.getMessage());
+            Toast.makeText(this,e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }

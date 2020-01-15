@@ -1,20 +1,13 @@
 package com.example.secondproject.Fragments;
 
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.res.Configuration;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,8 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.example.secondproject.Activitys.BottomNavigationActivity;
 import com.example.secondproject.Adapter.MoviesAdapter;
 import com.example.secondproject.Api.Client;
 import com.example.secondproject.Api.Service;
@@ -31,23 +22,18 @@ import com.example.secondproject.BuildConfig;
 import com.example.secondproject.Model.Movie;
 import com.example.secondproject.Model.MoviesResponse;
 import com.example.secondproject.R;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Home extends Fragment {
 
-    NavController navController;
     private RecyclerView recyclerView;
     private MoviesAdapter adapter;
     private List<Movie> movieList;
-    ProgressDialog pd;
     private SwipeRefreshLayout swipeContainer;
-    public static final String LOG_TAG=MoviesAdapter.class.getName();
 
     public Home() {
         // Required empty public constructor
@@ -61,7 +47,6 @@ public class Home extends Fragment {
 
         initViews(FragmentUI);
         swipeContainer =FragmentUI.findViewById(R.id.main_content);
-        //swipeContainer.setColorSchemeColors(android.R.color.holo_orange_dark);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh(){
@@ -74,7 +59,9 @@ public class Home extends Fragment {
 
         return FragmentUI;
     }
-    /*public Activity getActivity(){
+    /*
+    @Override
+    public Fragment getActivity(){
         Context context = getContext();
         while (context instanceof ContextWrapper)
         {
@@ -113,7 +100,7 @@ public class Home extends Fragment {
             Client Client = new Client();
             Service apiService =
                     Client.getClient().create(Service.class);
-            Call<MoviesResponse> call = apiService.getTopRatedMovies(BuildConfig.THE_MOVIE_DB_API_TOKEN);
+            Call<MoviesResponse> call = apiService.getPopularMovies(BuildConfig.THE_MOVIE_DB_API_TOKEN);
             call.enqueue(new Callback<MoviesResponse>() {
                 @Override
                 public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
@@ -137,9 +124,8 @@ public class Home extends Fragment {
         }
     }
 
-    /*@Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getActivity().getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -151,6 +137,6 @@ public class Home extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }*/
+    }
 
 }
