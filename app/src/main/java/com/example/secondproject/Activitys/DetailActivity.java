@@ -81,7 +81,7 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No API Data", Toast.LENGTH_SHORT).show();
         }
-        initViews();
+        //initViews();
     }
 
     private void initCollapsingToolbar(){
@@ -110,7 +110,7 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
-    private void initViews(){
+   /* private void initViews(){
         trailerList = new ArrayList<>();
         adapter = new TrailerAdapter(this, trailerList);
         recyclerView = findViewById(R.id.recycler_view1);
@@ -119,7 +119,7 @@ public class DetailActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         //loadJSON();
-    }
+    }*/
 
     private void loadJSON(){
         try {

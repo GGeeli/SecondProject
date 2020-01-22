@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     android:background="@color/grey">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome!"
+        android:textSize="72sp"
+        android:textColor="@color/button"
+        android:textStyle="italic"
+        android:gravity="center" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Manage your favorite movies in one App!"
+        android:textStyle="italic"
+        android:textSize="28sp"
+        android:textColor="@color/button"
+        android:gravity="center" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutEmail"
         android:layout_width="match_parent"
@@ -13,7 +30,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textColorHint="@color/button"
-        android:layout_marginTop="150dp">
+        android:layout_marginTop="60dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditTextEmailLogin"
