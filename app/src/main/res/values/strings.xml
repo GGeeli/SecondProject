@@ -12,5 +12,11 @@
     <string name="pref_most_popular">Most Popular</string>
     <string name="pref_highest_rated">Highest Rated</string>
     <string name="trailer">Trailer</string>
+    <string name="error_message_name">Enter Name</string>
+    <string name="error_message_email">Enter Email</string>
+    <string name="error_message_password">Enter Password</string>
+    <string name="error_password_match">Passwords do not match</string>
+    <string name="success_message">Account created!</string>
+    <string name="error_email_exists">Email in use!</string>
 
 </resources>
