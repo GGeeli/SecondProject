@@ -1,7 +1,9 @@
 package com.example.secondproject.Activitys;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,7 +11,6 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -18,20 +19,20 @@ import com.example.secondproject.Adapter.TrailerAdapter;
 import com.example.secondproject.Api.Client;
 import com.example.secondproject.Api.Service;
 import com.example.secondproject.BuildConfig;
+import com.example.secondproject.Model.Movie;
 import com.example.secondproject.Model.Trailer;
 import com.example.secondproject.Model.TrailerResponse;
 import com.example.secondproject.R;
+import com.example.secondproject.SQLite.FavoriteDbHelper;
+import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static java.security.AccessController.getContext;
 
 public class DetailActivity extends AppCompatActivity {
     TextView nameOfMovie, plotSynopsis, userRating, releaseDate;
@@ -40,6 +41,11 @@ public class DetailActivity extends AppCompatActivity {
     private TrailerAdapter adapter;
     private List<Trailer> trailerList;
     int movie_id;
+    private FavoriteDbHelper favoriteDbHelper;
+
+    private Movie favorite;
+    private final AppCompatActivity activity = DetailActivity.this;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +75,7 @@ public class DetailActivity extends AppCompatActivity {
             String dateOfRelease = getIntent().getExtras().getString("release_date");
             movie_id = getIntent().getExtras().getInt("id");
 
+
             Glide.with(this)
                     .load(thumbnail)
                     .placeholder(R.drawable.loading_shape)
@@ -81,6 +88,33 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No API Data", Toast.LENGTH_SHORT).show();
         }
+
+        MaterialFavoriteButton materialFavoriteButton = findViewById(R.id.favorite_button);
+        String sharedPreferences = PreferenceManager.getDefaultSharedPreferencesName(getApplicationContext());
+        materialFavoriteButton.setOnFavoriteChangeListener(
+                new MaterialFavoriteButton.OnFavoriteChangeListener(){
+                    @Override
+                    public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite){
+                        if(favorite){
+                            SharedPreferences.Editor editor = getSharedPreferences("com.example.secondproject.DetailActivity", MODE_PRIVATE).edit();
+                            editor.putBoolean("Favotite Added", true);
+                            editor.commit();
+                            Toast.makeText(getApplicationContext(), "Added to Favorites", Toast.LENGTH_SHORT).show();
+                            saveFavorite();
+                        }else{
+                                int movie_id = getIntent().getExtras().getInt("id");
+                                favoriteDbHelper = new FavoriteDbHelper(DetailActivity.this);
+                                favoriteDbHelper.deleteFavorite(movie_id);
+
+                            SharedPreferences.Editor editor = getSharedPreferences("com.example.secondproject.DetailActivity", MODE_PRIVATE).edit();
+                            editor.putBoolean("Favorite Removed", true);
+                            Toast.makeText(getApplicationContext(), "Removed from Favorites", Toast.LENGTH_SHORT).show();
+                            editor.commit();
+                        }
+                    }
+                }
+        );
+
         //initViews();
     }
 
@@ -108,6 +142,27 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
+    }
+
+    public void saveFavorite(){
+
+        favoriteDbHelper = new FavoriteDbHelper(activity);
+        favorite = new Movie();
+        int movie_id =getIntent().getExtras().getInt("id");
+        String rate = getIntent().getExtras().getString("vote_average");
+        String poster = getIntent().getExtras().getString("poster_path");
+
+        favorite.setId(movie_id);
+        favorite.setOriginalTitle(nameOfMovie.getText().toString().trim());
+        favorite.setPoster_path(poster);
+        favorite.setVoteAverage(Double.parseDouble(rate));
+        favorite.setOverview(plotSynopsis.getText().toString().trim());
+
+        favoriteDbHelper.addFavorite(favorite);
+
     }
 
    /* private void initViews(){

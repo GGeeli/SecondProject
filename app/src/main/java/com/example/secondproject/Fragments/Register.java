@@ -18,7 +18,6 @@ import com.example.secondproject.Helper.InputValidation;
 import com.example.secondproject.Model.User;
 import com.example.secondproject.R;
 import com.example.secondproject.SQLite.DatabaseHelper;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 

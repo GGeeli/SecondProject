@@ -78,6 +78,7 @@ public class Home extends Fragment {
         recyclerView = FragmentUI.findViewById(R.id.recycler_view);
         movieList = new ArrayList<>();
         adapter = new MoviesAdapter(getContext(), movieList);
+
         if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         }else

@@ -41,6 +41,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         String vote = Double.toString(movieList.get(i).getVoteAverage());
         viewHolder.userRating.setText(vote);
 
+
         Glide.with(mContext)
                 .load(movieList.get(i).getPoster_path())
                 .placeholder(R.drawable.loading_shape)

@@ -77,6 +77,18 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/release_date"/>
 
+            <com.github.ivbaranov.mfb.MaterialFavoriteButton
+                android:id="@+id/favorite_button"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentRight="true"
+                app:layout_constraintRight_toLeftOf="@+id/user_rating"
+                app:layout_constraintTop_toBottomOf="@+id/user_rating"
+                app:layout_constraintBottom_toTopOf="@+id/user_rating"
+                app:layout_constraintLeft_toRightOf="@+id/release_date"
+                android:background="@color/white"/>
+
+
            <!-- <TextView
                 android:id="@+id/thumbnailURL"
                 android:layout_width="match_parent"

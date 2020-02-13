@@ -18,5 +18,7 @@
     <string name="error_password_match">Passwords do not match</string>
     <string name="success_message">Account created!</string>
     <string name="error_email_exists">Email in use!</string>
+    <string name="favorite">Favorite Movies</string>
+    <string name="error_user_exist">Incorrect password!</string>
 
 </resources>

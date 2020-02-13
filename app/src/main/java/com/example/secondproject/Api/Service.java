@@ -13,8 +13,8 @@ public interface Service {
     @GET("movie/popular")
     Call<MoviesResponse> getPopularMovies(@Query("api_key") String apiKey);
 
-    @GET("movie/top_rated")
-    Call<MoviesResponse> getTopRatedMovies(@Query("api_key") String apiKey);
+    @GET("movie/now_playing")
+    Call<MoviesResponse> getNowPlaying(@Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}/video")
     Call<TrailerResponse> getMovieTrailer(@Path("movie_id") int id, @Query("api_key") String apiKey);

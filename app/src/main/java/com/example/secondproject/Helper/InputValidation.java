@@ -11,6 +11,8 @@ import android.view.inputmethod.InputMethodManager;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import static com.example.secondproject.Utilis.Constants.KEY_PASSWORD;
+
 public class InputValidation {
 
     private Context context;
@@ -56,6 +58,19 @@ public class InputValidation {
         }
         return true;
     }
+
+    public boolean isInputCurrentPassword(TextInputEditText textInputEditText,TextInputLayout textInputLayout,String message){
+        String currentPassword = textInputEditText.getText().toString().trim();
+
+        if(currentPassword.contentEquals(KEY_PASSWORD)){
+            return true;
+        }else{
+            textInputLayout.setError(message);
+            hideKeyBoardFrom(textInputEditText);
+            return false;
+        }
+    }
+
 
     private void hideKeyBoardFrom(View view){
         InputMethodManager inm =(InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
